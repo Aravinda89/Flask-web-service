@@ -10,6 +10,6 @@ def hello():
     message = request.get_json(force=True)
     name = message['name']
     response = {
-        'greeting': 'Hello, '+ name + '!'
+        'greeting':'Hello,'+name+'!'
     }
     return jsonify(response)
