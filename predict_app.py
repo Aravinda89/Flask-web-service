@@ -14,8 +14,10 @@ from flask import request
 from flask import jsonify
 from flask import Flask
 
-app = Flask(__name__)
+from flask_cors import CORS, cross_origin
 
+app = Flask(__name__)
+cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
 
 def get_model():
 	global model
@@ -36,6 +38,7 @@ print("Loading Model ...")
 get_model()
 
 @app.route("/predict", methods=["POST"])
+@cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def predict():
 	message = request.get_json(force=True)
 	encoded = message["image"]

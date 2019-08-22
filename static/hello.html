@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="shortcut icon" href="#"/>
 
 	<title>Greeting App</title>
 	<style>
@@ -19,9 +18,10 @@
 	<script>
 		$("#name-button").click(function(event){
 			let message = {
-				name: $("#name-input").val()
+			name: $("#name-input").val()
 			}
-			$.post("http://10.0.0.4:5000/hello", JSON.stringify(message), function(response){
+			
+			$.post("http://127.0.0.1:5000/hello", JSON.stringify(message),function(response){
 				$("#greeting").text(response.greeting);
 				console.log(response)
 			});
