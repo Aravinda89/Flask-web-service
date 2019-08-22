@@ -1,3 +1,7 @@
+# export FLASK_APP=hello_app.py
+# flask run --host=127.0.0.1
+# http://127.0.0.1:5000/static/hello.html
+
 from flask import request, jsonify, Flask
 
 app = Flask(__name__)

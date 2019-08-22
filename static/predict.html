@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>deeplizard</title>
     <style>
-       *{
+       * {
     		font-size: 30px;
-    	}
+    	 }
     </style>
 </head>
 <body>
@@ -17,10 +16,11 @@
 	<p>Cat: <span id="cat-prediction"></span></p>
 	<img id="selected-image" src=""/>
 
-	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src = "https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
 		let base64Image;
 		$("#image-selector").change(function() {
+
 			let reader = new FileReader();
 			reader.onload = function(e) {
 				let dataURL = reader.result;
@@ -37,13 +37,16 @@
 			let message = {
 				image: base64Image
 			}
-			console.log(message);
-			$.post("http://localhost:5000/predict", JSON.stringify(message), function(response){
+				console.log(message);
+
+				$.post("http://127.0.0.1:5000/predict", JSON.stringify(message), function(response){
 				$("#dog-prediction").text(response.prediction.dog.toFixed(6));
 				$("#cat-prediction").text(response.prediction.cat.toFixed(6));
+
 				console.log(response);
 			});
 		});
+		
 	</script>
 </body>
 </html>

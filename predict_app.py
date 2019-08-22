@@ -1,5 +1,11 @@
 # Cats and Dogs model
 
+# python predict_app.py runserver -d
+
+# set FLASK_APP=predict_app.py
+# flask run --host=0.0.0.0
+# localhost:5000/sample
+
 import base64
 import numpy as np
 import io
@@ -10,14 +16,9 @@ from keras.models import Sequential
 from keras.models import load_model
 from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing.image import img_to_array
-from flask import request
-from flask import jsonify
-from flask import Flask
-
-from flask_cors import CORS, cross_origin
+from flask import request, jsonify, Flask
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
 
 def get_model():
 	global model
@@ -38,11 +39,11 @@ print("Loading Model ...")
 get_model()
 
 @app.route("/predict", methods=["POST"])
-@cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def predict():
 	message = request.get_json(force=True)
 	encoded = message["image"]
 	decoded = base64.b64deocde(encoded)
+
 	image = Image.open(io.ByteIO(decoded))
 	processed_image = preprocess_image(image, target_size=(224, 224))
 
@@ -51,8 +52,7 @@ def predict():
 	response = {
 		'prediction': {
 			'dog': prediction[0][0],
-			'cat': prediction[0][1]
+			'cat': prediction[0][1],
 		}
 	}
 	return jsonify(response)
-
