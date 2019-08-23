@@ -1,7 +1,7 @@
 # Cats and Dogs model
 
 # python predict_app.py runserver -d
-
+# model - https://drive.google.com/file/d/19yICdtSbU_YkQBRxJ2if9KJwUL1oY5xs/view
 # set FLASK_APP=predict_app.py
 # flask run --host=0.0.0.0
 
@@ -18,6 +18,7 @@ from flask import request, jsonify, Flask
 
 app = Flask(__name__)
 
+
 def get_model():
 	global model
 	model = load_model('VGG16_cats_and_dogs.h5')
@@ -31,22 +32,20 @@ def preprocess_image(image, target_size):
 	image = image.resize(target_size)
 	image = img_to_array(image)
 	image = np.expand_dims(image, axis=0)
-
 	return image
+
 
 print("Loading Model ...")
 get_model()
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
 	message = request.get_json(force=True)
 	encoded = message["image"]
 	decoded = base64.b64decode(encoded)
-
 	image = Image.open(io.BytesIO(decoded))
-
 	processed_image = preprocess_image(image, target_size=(224, 224))
-
 	prediction = model.predict(processed_image).tolist()
 
 	response = {
