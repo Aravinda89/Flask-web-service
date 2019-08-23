@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>deep learning</title>
+	<style>
+		*{
+			font-size: 20px;
+		}
+	</style>
+</head>
+<body>
+	<input id= "image-selector" type="file">
+	<button id= "predict-button">predict</button>
+	<p style="font-weight: bold">predicitions</p>
+	<p style="color: red;">prd1: <span style="color: green" id="prd1-predction"></span></p>
+	<p style="color: red;">prd2: <span style="color: green" id="prd2-predction"></span></p>
+	<p style="color: red;">prd3: <span style="color: green" id="prd3-predction"></span></p>
+	<p style="color: red;">prd4: <span style="color: green" id="prd4-predction"></span></p>
+	<p style="color: red;">prd5: <span style="color: green" id="prd5-predction"></span></p>
+	<img id="selected-image" src=""/>
+
+	<script src= "https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+		
+		let base64Image;
+		$("#image-selector").change(function(){
+
+			let reader = new FileReader();
+			reader.onload = function(e){
+				let dataURL = reader.result;
+				$('#selected-image').attr("src", dataURL);
+				base64Image =  dataURL.replace("data:image/png;base64,","");
+				console.log(base64Image);
+			}
+
+			reader.readAsDataURL($("#image-selector")[0].files[0]);
+			$("#prd1-predction").text("");
+			$("#prd2-predction").text("");
+			$("#prd3-predction").text("");
+			$("#prd4-predction").text("");
+			$("#prd5-predction").text("");
+		});
+
+		$("#predict-button").click(function(event){
+			let message = {
+				image: base64Image
+			}
+			console.log(message);
+
+			$.post("http://127.0.0.1:5000/predict", JSON.stringfy(message), function(response){
+			$("prd1-predction").text(response.predicition.prd1 +" " response.predicition.prd1_v.toFixed(6)+ "%. ");
+			$("prd2-predction").text(response.predicition.prd1 +" " response.predicition.prd1_v.toFixed(6)+ "%. ");
+			$("prd3-predction").text(response.predicition.prd1 +" " response.predicition.prd1_v.toFixed(6)+ "%. ");
+			$("prd4-predction").text(response.predicition.prd1 +" " response.predicition.prd1_v.toFixed(6)+ "%. ");
+			$("prd5-predction").text(response.predicition.prd1 +" " response.predicition.prd1_v.toFixed(6)+ "%. ");
+
+			console.log(response)
+			});
+
+		});
+
+	</script>
+</body>
+</html>
