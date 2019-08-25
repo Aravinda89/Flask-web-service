@@ -4,6 +4,7 @@
 # model - https://drive.google.com/file/d/19yICdtSbU_YkQBRxJ2if9KJwUL1oY5xs/view
 # set FLASK_APP=predict_app.py
 # flask run --host=0.0.0.0
+# http://127.0.0.1:5000/static/predict.html
 
 import base64
 import numpy as np
