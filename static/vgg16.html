@@ -29,7 +29,11 @@
 			reader.onload = function(e){
 				let dataURL = reader.result;
 				$('#selected-image').attr("src", dataURL);
-				base64Image =  dataURL.replace("data:image/png;base64,","");
+				if(dataURL.includes("data:image/jpeg")){
+                    base64Image = dataURL.replace("data:image/jpeg;base64,", "");
+                }else{
+				base64Image = dataURL.replace("data:image/png;base64,","");
+				}
 				console.log(base64Image);
 			}
 
